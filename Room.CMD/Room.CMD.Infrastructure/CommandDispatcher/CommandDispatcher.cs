@@ -1,5 +1,5 @@
 using CQRS.Core.Command;
-using CQRS.Core.ICommandDispatcher;
+using CQRS.Core.Infrastructure;
 
 namespace Room.CMD.API.CommandDispatcher;
 
