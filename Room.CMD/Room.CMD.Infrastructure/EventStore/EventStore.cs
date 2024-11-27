@@ -2,15 +2,22 @@
 using CQRS.Core.Event;
 using CQRS.Core.Infrastructure;
 using CQRS.Core.Exceptions;
+using Microsoft.Extensions.Options;
+using CQRS.Core.Topics;
+using CQRS.Core.Producer;
 
 namespace Room.CMD.Infrastructure.EventStore
 {
     public class EventStore : IEventStore
     {
         private readonly IEventStoreRepository _eventStoreRepository;
-        public EventStore(IEventStoreRepository eventStoreRepository)
+        private readonly string _topic;
+        private readonly IEventProducer _producer;
+        public EventStore(IEventStoreRepository eventStoreRepository, IOptions<KafkaTopic> options, IEventProducer producer)
         {
             _eventStoreRepository = eventStoreRepository;
+            _topic = options.Value.Topic;
+            _producer = producer;
         }
 
         public async Task<List<BaseEvent>> GetEventsAsynsc(Guid AggregateId)
@@ -44,10 +51,10 @@ namespace Room.CMD.Infrastructure.EventStore
                     TimeStamp = DateTime.UtcNow,
                     EventData = @event
                 };
-
                 await _eventStoreRepository.SaveAsync(eventModel);
+                await _producer.ProduceAsync(@event, _topic);                
             }
-            
+
         }
     }
 }

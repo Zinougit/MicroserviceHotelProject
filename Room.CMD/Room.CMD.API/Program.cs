@@ -1,8 +1,12 @@
+using Confluent.Kafka;
 using CQRS.Core.Domain;
 using CQRS.Core.Infrastructure;
+using CQRS.Core.Producer;
+using CQRS.Core.Topics;
 using Room.CMD.Infrastracture.Repository;
 using Room.CMD.Infrastructure.Config;
 using Room.CMD.Infrastructure.EventStore;
+using Room.CMD.Infrastructure.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<MongoConfig>(builder.Configuration.GetSection(nameof(MongoConfig)));
+builder.Services.Configure<KafkaTopic>(builder.Configuration.GetSection(nameof(KafkaTopic)));
+builder.Services.Configure<ProducerConfig>(builder.Configuration.GetSection(nameof(ProducerConfig)));
 builder.Services.AddScoped<IEventStoreRepository, EventStoreRepository>();
+builder.Services.AddScoped<IEventProducer,EventProducer>();
 builder.Services.AddScoped<IEventStore,EventStore>();
 var app = builder.Build();
 

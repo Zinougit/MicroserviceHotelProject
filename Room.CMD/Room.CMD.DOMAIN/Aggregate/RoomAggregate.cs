@@ -38,6 +38,10 @@ public class RoomAggregate : AggregateRoot {
         if(command.SizeInSquareMeters<0){
             throw new InvalidDataException("The Size of the room cannot be negative");
         }
+        if(int.TryParse(command.PricePerNight, out _))
+        {
+            throw new RoomInformationMissedException(nameof(command.PricePerNight));
+        }
         RaiseEvent(new RoomCreatedEvent {
             Id = command.Id,
             RoomNumber = command.RoomNumber,
