@@ -11,7 +11,7 @@ namespace Room.Query.Infrastructure.DataAccess
         {
             modelBuilder.Entity<RoomEntity>(entity =>
             {
-                entity.OwnsOne(r => r.Amenities); // Déclare "amenities" comme un type complexe
+                entity.OwnsOne(r => r.Amenities); 
             });
         }
     }

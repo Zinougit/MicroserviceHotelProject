@@ -42,9 +42,7 @@ namespace Room.Query.Infrastructure.Repository
             catch (Exception ex) {
                 throw;
             }
-
         }
-
         public async Task<List<RoomEntity>> GetAllAsync()
         {
             using DataBaseContext context = _contextFactory.CreateDbContext();

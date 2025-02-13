@@ -1,4 +1,5 @@
 using Confluent.Kafka;
+using CQRS.Core.Topics;
 using CQRS.CORE.Consumer;
 using Microsoft.EntityFrameworkCore;
 using Room.Query.Domain.Repository;
@@ -17,17 +18,20 @@ builder.Services.AddSingleton<DataBaseContextFactory>(new DataBaseContextFactory
 builder.Services.AddScoped<IRoomRepository,RoomRepository>();
 builder.Services.AddScoped<IEventHandler, Room.Query.Infrastructure.EventHandler.EventHandler>();
 builder.Services.Configure<ConsumerConfig>(builder.Configuration.GetSection(nameof(ConsumerConfig)));
-builder.Services.AddScoped<IEventConsumer, IEventConsumer>();
+builder.Services.AddScoped<IEventConsumer, EventConsumer>();
+builder.Services.Configure<KafkaTopic>(builder.Configuration.GetSection(nameof(KafkaTopic)));
 builder.Services.AddHostedService<ConsumerHostedService>();
-var DbContext = builder.Services.BuildServiceProvider().GetRequiredService<DataBaseContext>();
-DbContext.Database.EnsureCreated();
+var context = builder.Services.BuildServiceProvider().GetRequiredService<DataBaseContext>();
+context.Database.EnsureCreated();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (!app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
+app.Run();
+

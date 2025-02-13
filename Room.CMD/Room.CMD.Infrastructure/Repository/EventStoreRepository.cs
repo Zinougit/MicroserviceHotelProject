@@ -1,6 +1,7 @@
 using CQRS.Core.Domain;
 using CQRS.Core.Event;
 using Microsoft.Extensions.Options;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using Room.CMD.Infrastructure.Config;
 using Room.Common.Events;

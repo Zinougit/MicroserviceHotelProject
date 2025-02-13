@@ -14,7 +14,7 @@ namespace Room.CMD.Domain.Commands
     
         public async Task HandleAsync(AddRoomCommand command)
         {
-            var aggregate = new RoomAggregate();
+            var aggregate = new RoomAggregate(command);
             await _eventSourcingHandler.SaveAsync(aggregate);
         }
 

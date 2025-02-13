@@ -50,14 +50,14 @@ public class RoomAggregate : AggregateRoot {
             Floor = command.Floor,
             Amenities = command.amenities,
             LastRenovationDate = command.LastRenovationDate,
-            View = command.view,
+            View = command.View,
             Posted = DateTime.UtcNow,
             IsSmokedAllowed = command.IsSmokedAllowed,
             SizeInSquareMeters = command.SizeInSquareMeters
         });
     }
-    private void Apply(RoomCreatedEvent @event){
-        IsActive = true;
+    public void Apply(RoomCreatedEvent @event){
+         IsActive = true;
         _id = @event.Id;
         _roomNumber = @event.RoomNumber;
         _roomArea = @event.RoomArea;
@@ -116,7 +116,7 @@ public class RoomAggregate : AggregateRoot {
             SizeInSquareMeters = command.SizeInSquareMeters
         });
     }
-    private void Apply (RoomUpdatedEvent @event){
+    public void Apply (RoomUpdatedEvent @event){
         _roomNumber = @event.RoomNumber ?? _roomNumber;
         _roomArea = @event.RoomArea ?? _roomArea;
         _pricePerNight = @event.PricePerNight ?? _pricePerNight;

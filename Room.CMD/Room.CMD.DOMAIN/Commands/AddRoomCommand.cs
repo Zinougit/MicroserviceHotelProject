@@ -11,7 +11,7 @@ public class AddRoomCommand : BaseCommand {
     public decimal SizeInSquareMeters {get;set;}
     public bool IsSmokedAllowed {get;set;}
     public int Floor {get;set;}
-    public ViewEnums view {get;set;}
+    public ViewEnums View {get;set;}
     public required Amenities amenities {get;set;}
     public DateTime? LastRenovationDate{get;set;}
 }

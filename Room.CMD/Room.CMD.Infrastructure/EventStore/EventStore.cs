@@ -45,7 +45,7 @@ namespace Room.CMD.Infrastructure.EventStore
                 var eventModel = new EventModel
                 {
                     AggregateId = id,
-                    Version = Version++,
+                    Version = Version+1,
                     AggregateType = "RoomAggregate",
                     EventType = @event.Type,
                     TimeStamp = DateTime.UtcNow,

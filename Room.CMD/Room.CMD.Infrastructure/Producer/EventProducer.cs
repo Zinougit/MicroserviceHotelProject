@@ -19,10 +19,12 @@ namespace Room.CMD.Infrastructure.Producer
                 SetKeySerializer(Serializers.Utf8)
                 .SetValueSerializer(Serializers.Utf8)
                  .Build();
+            var type = typeof(T);
+            var type2 = @event.GetType();
             var message = new Message<string, string>
             {
                 Key = Guid.NewGuid().ToString(),
-                Value = JsonSerializer.Serialize(@event, typeof(T))
+                Value = JsonSerializer.Serialize(@event, @event.GetType())
             };
             var deleveryResult = await producer.ProduceAsync(topic,message); 
 

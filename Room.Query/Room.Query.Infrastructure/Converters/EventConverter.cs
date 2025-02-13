@@ -28,7 +28,7 @@ namespace Room.Query.Infrastructure.Converters
                 nameof(RoomCreatedEvent) => JsonSerializer.Deserialize<RoomCreatedEvent>(json,options),
                 nameof(RoomUpdatedEvent) => JsonSerializer.Deserialize<RoomUpdatedEvent>(json,options),
                 nameof(RoomDeletedEvent) => JsonSerializer.Deserialize<RoomDeletedEvent>(json, options),
-                _ => throw new JsonException($"this Type {typeDiscriminator} is not supported yet ")
+                _ => null,
             };
         }
 
